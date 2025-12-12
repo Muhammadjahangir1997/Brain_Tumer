@@ -6,7 +6,8 @@ from tensorflow.keras.models import load_model
 from PIL import Image
 
 MODEL_PATH = "brain_tumor_model.h5"
-DRIVE_URL = "https://drive.google.com/uc?id=1B9vbxl1vg0bFhVA_5SReq9J_aocJ46BA"
+DRIVE_URL = "https://drive.google.com/uc?export=download&id=1B9vbxl1vg0bFhVA_5SReq9J_aocJ46BA"
+
 
 # Download model if not present
 if not tf.io.gfile.exists(MODEL_PATH):
@@ -34,3 +35,4 @@ if uploaded_file is not None:
         st.error("Tumor Detected")
     else:
         st.success("No Tumor Detected")
+

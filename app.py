@@ -1,38 +1,21 @@
 import streamlit as st
 import numpy as np
-import tensorflow as tf
 from tensorflow.keras.models import load_model
 from tensorflow.keras.preprocessing import image
 from PIL import Image
-import gdown
-import os
 
-st.set_option('deprecation.showfileUploaderEncoding', False)
+# Load trained model
+model = load_model("brain_tumor_model.h5")
 
 st.title("Brain Tumor Detection System (AI Powered)")
 st.write("Upload a Brain MRI image and the model will predict Tumor or No Tumor")
 
-# Model file path
-MODEL_PATH = "brain_tumor_model.h5"
-
-# Google Drive link to your model
-DRIVE_LINK = "YOUR_GOOGLE_DRIVE_LINK_HERE"
-
-# Download model if not already exists
-if not os.path.exists(MODEL_PATH):
-    gdown.download(DRIVE_LINK, MODEL_PATH, quiet=False)
-
-# Load the model
-model = load_model(MODEL_PATH)
-
-# Image uploader
 uploaded_file = st.file_uploader("Upload MRI Image", type=["jpg", "png", "jpeg"])
 
 if uploaded_file is not None:
     img = Image.open(uploaded_file)
     st.image(img, caption="Uploaded MRI Image", width=300)
 
-    # Preprocess image
     img = img.resize((224, 224))
     img_array = image.img_to_array(img)
     img_array = img_array / 255.0

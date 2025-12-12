@@ -17,7 +17,7 @@ if not os.path.exists(MODEL_PATH):
     with st.spinner("Downloading model (~150MB), please wait..."):
         try:
             gdown.download(
-                "https://drive.google.com/uc?export=download&id=1B9vbxl1vg0bFhVA_5SReq9J_aocJ46BA",
+                "https://huggingface.co/jahangi/brain_tumer",
                 MODEL_PATH,
                 quiet=False,
                 fuzzy=True                  # ← YE LINE ADD KAR DO
@@ -57,3 +57,4 @@ if uploaded_file is not None:
             
         st.write(f"**Confidence:** {confidence:.2f}%")
         st.progress(confidence / 100)
+

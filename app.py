@@ -1,7 +1,7 @@
 import streamlit as st
 import numpy as np
-from keras.models import load_model
-from keras.preprocessing import image
+from tensorflow.keras.models import load_model
+from tensorflow.keras.preprocessing.image import img_to_array
 from PIL import Image
 import gdown
 import os
@@ -14,7 +14,7 @@ st.write("Upload a Brain MRI image and the model will predict Tumor or No Tumor"
 # Model file path
 MODEL_PATH = "brain_tumor_model.h5"
 
-# Google Drive direct download link for your model
+# Google Drive direct download link
 DRIVE_LINK = "https://drive.google.com/uc?id=1B9vbxl1vg0bFhVA_5SReq9J_aocJ46BA"
 
 # Download model if not exists
@@ -23,20 +23,19 @@ if not os.path.exists(MODEL_PATH):
     gdown.download(DRIVE_LINK, MODEL_PATH, quiet=False)
     st.success("Model downloaded successfully!")
 
-# Load the trained model
+# Load trained model
 model = load_model(MODEL_PATH)
 
 # File uploader
 uploaded_file = st.file_uploader("Upload MRI Image", type=["jpg", "png", "jpeg"])
 
 if uploaded_file is not None:
-    # Display uploaded image
     img = Image.open(uploaded_file)
     st.image(img, caption="Uploaded MRI Image", width=300)
 
     # Preprocess image
     img = img.resize((224, 224))
-    img_array = image.img_to_array(img)
+    img_array = img_to_array(img)
     img_array = img_array / 255.0
     img_array = np.expand_dims(img_array, axis=0)
 
@@ -52,4 +51,3 @@ if uploaded_file is not None:
             st.success("Result: No Tumor Detected")
 
         st.write(f"Confidence: {confidence:.2f}%")
-

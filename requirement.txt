@@ -1,5 +1,6 @@
-tensorflow
+tensorflow==2.15.0
 streamlit
 pillow
 numpy
 keras
+gdown

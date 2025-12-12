@@ -1,8 +1,11 @@
 import streamlit as st
 import numpy as np
-from tensorflow.keras.models import load_model
-from tensorflow.keras.preprocessing import image
+from keras.models import load_model
+from keras.preprocessing import image
 from PIL import Image
+import gdown
+import os
+
 
 # Load trained model
 model = load_model("brain_tumor_model.h5")
@@ -31,3 +34,4 @@ if uploaded_file is not None:
             st.success("Result: No Tumor Detected")
 
         st.write(f"Confidence: {confidence:.2f}%")
+

@@ -1,8 +1,5 @@
-streamlit>=1.52
-tensorflow-cpu==2.20.0
+streamlit
+tensorflow
 pillow
-numpy>=1.25
-gdown
-huggingface_hub
-
+numpy
 

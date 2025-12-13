@@ -8,7 +8,7 @@ from io import BytesIO
 # Direct load from Hugging Face (TensorFlow SavedModel format = no corruption)
 @st.cache_resource(show_spinner="Loading Brain Tumor AI Model...")
 def load_model():
-    model = tf.keras.models.load_model("https://huggingface.co/jahangi/brain-tumor-fixed/resolve/main/saved_model")
+    model = tf.keras.models.load_model("https://drive.google.com/file/d/1B9vbxl1vg0bFhVA_5SReq9J_aocJ46BA/view?usp=drive_link")
     return model
 
 model = load_model()
@@ -42,3 +42,4 @@ if uploaded_file is not None:
         
         st.progress(confidence / 100)
         st.balloons()
+

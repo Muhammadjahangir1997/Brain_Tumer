@@ -9,7 +9,7 @@ import tensorflow as tf # TensorFlow import karna zaroori hai
 
 # --- Model Variables ---
 MODEL_PATH = "brain_tumor_model.h5"
-MODEL_URL = "https://drive.google.com/uc?id=1B9vbxl1vg0bFhVA_5SReq9J_aocJ46BA"
+MODEL_URL = "https://drive.google.com/file/d/1B9vbxl1vg0bFhVA_5SReq9J_aocJ46BA/view?usp=sharing"
 
 # Caching the model loading process
 # st.cache_resource is best for ML models
@@ -45,3 +45,4 @@ def load_and_cache_model():
 model = load_and_cache_model()
 
 # ... rest of your Streamlit UI code
+

@@ -4,10 +4,6 @@ import numpy as np
 from PIL import Image
 import gdown
 import os
-try:
-    model = tf.keras.models.load_model("model.h5", compile=False)
-except Exception as e:
-    st.error(f"Model load failed: {e}")
 
 
 @st.cache_resource(show_spinner="Loading Brain Tumor AI Model...")
@@ -16,7 +12,7 @@ def load_model():
 
     if not os.path.exists(model_path):
         gdown.download(
-            "https://drive.google.com/uc?id=1B9vbxl1vg0bFhVA_5SReq9J_aocJ46BA",
+            "https://drive.google.com/file/d/1B9vbxl1vg0bFhVA_5SReq9J_aocJ46BA/view?usp=sharing",
             model_path,
             quiet=False
         )
@@ -55,4 +51,5 @@ if uploaded_file:
 
         st.write(f"Confidence: {confidence:.2f}%")
         st.progress(confidence / 100)
+
 

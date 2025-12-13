@@ -1,55 +1,93 @@
 import streamlit as st
-import tensorflow as tf
 import numpy as np
+from tensorflow.keras.models import load_model
+from tensorflow.keras.preprocessing import image
 from PIL import Image
 import gdown
 import os
+import tensorflow as tf # TensorFlow import karna zaroori hai
 
+# --- Model Variables ---
+MODEL_PATH = "brain_tumor_model.h5"
+MODEL_URL = "import streamlit as st
+import numpy as np
+from tensorflow.keras.models import load_model
+from tensorflow.keras.preprocessing import image
+from PIL import Image
+import gdown
+import os
+import tensorflow as tf # TensorFlow import karna zaroori hai
 
-@st.cache_resource(show_spinner="Loading Brain Tumor AI Model...")
-def load_model():
-    model_path = "model.h5"
+# --- Model Variables ---
+MODEL_PATH = "brain_tumor_model.h5"
+MODEL_URL = "https://drive.google.com/file/d/1B9vbxl1vg0bFhVA_5SReq9J_aocJ46BA/view?usp=sharing"
 
-    if not os.path.exists(model_path):
-        gdown.download(
-            "https://drive.google.com/file/d/1B9vbxl1vg0bFhVA_5SReq9J_aocJ46BA/view?usp=sharing",
-            model_path,
-            quiet=False
-        )
+# Caching the model loading process
+# st.cache_resource is best for ML models
+@st.cache_resource
+def load_and_cache_model():
+    if not os.path.exists(MODEL_PATH):
+        st.info("Downloading model, please wait...")
+        # 1. Download Attempt
+        try:
+            gdown.download(MODEL_URL, MODEL_PATH, quiet=False)
+            st.success("Model downloaded successfully!")
+        except Exception as e:
+            st.error(f"Download Error: Could not retrieve file from Google Drive. {e}")
+            st.stop() # Agar download fail ho toh ruk jao
 
-    model = tf.keras.models.load_model(model_path)
-    return model
+    # 2. Loading Attempt with Error Handling
+    try:
+        # Load the model
+        model = tf.keras.models.load_model(MODEL_PATH)
+        return model
+    except Exception as e:
+        # Agar loading fail ho toh file ko delete kar do aur user ko batao
+        st.error(f"Model Load Error: The downloaded model file seems corrupt. Error: {e}")
+        st.warning(f"Deleting the corrupt file '{MODEL_PATH}'. Please refresh the app to re-download.")
+        
+        # Corrupt file ko delete kar dein taki Streamlit next time naya download kare
+        if os.path.exists(MODEL_PATH):
+            os.remove(MODEL_PATH)
+        
+        st.stop() # App ko rok do
 
-model = load_model()
+# Load trained model
+model = load_and_cache_model()
 
-st.title("🧠 Brain Tumor Detection")
-st.write("Upload MRI → Get instant result")
+# ... rest of your Streamlit UI code"
 
-uploaded_file = st.file_uploader(
-    "Upload Brain MRI",
-    type=["png", "jpg", "jpeg"]
-)
+# Caching the model loading process
+# st.cache_resource is best for ML models
+@st.cache_resource
+def load_and_cache_model():
+    if not os.path.exists(MODEL_PATH):
+        st.info("Downloading model, please wait...")
+        # 1. Download Attempt
+        try:
+            gdown.download(MODEL_URL, MODEL_PATH, quiet=False)
+            st.success("Model downloaded successfully!")
+        except Exception as e:
+            st.error(f"Download Error: Could not retrieve file from Google Drive. {e}")
+            st.stop() # Agar download fail ho toh ruk jao
 
-if uploaded_file:
-    image = Image.open(uploaded_file).convert("RGB")
-    st.image(image, caption="Uploaded MRI", width=300)
+    # 2. Loading Attempt with Error Handling
+    try:
+        # Load the model
+        model = tf.keras.models.load_model(MODEL_PATH)
+        return model
+    except Exception as e:
+        # Agar loading fail ho toh file ko delete kar do aur user ko batao
+        st.error(f"Model Load Error: The downloaded model file seems corrupt. Error: {e}")
+        st.warning(f"Deleting the corrupt file '{MODEL_PATH}'. Please refresh the app to re-download.")
+        
+        # Corrupt file ko delete kar dein taki Streamlit next time naya download kare
+        if os.path.exists(MODEL_PATH):
+            os.remove(MODEL_PATH)
+        
+        st.stop() # App ko rok do
 
-    img = image.resize((224, 224))
-    img_array = np.array(img) / 255.0
-    img_array = np.expand_dims(img_array, axis=0)
+# Load trained model
+model = load_and_cache_model()
 
-    if st.button("Detect Tumor"):
-        with st.spinner("Analyzing..."):
-            pred = model.predict(img_array)[0][0]
-
-        confidence = pred * 100 if pred > 0.5 else (1 - pred) * 100
-
-        if pred > 0.5:
-            st.error("TUMOR DETECTED")
-        else:
-            st.success("NO TUMOR")
-
-        st.write(f"Confidence: {confidence:.2f}%")
-        st.progress(confidence / 100)
-
-
+# ... rest of your Streamlit UI code

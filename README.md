@@ -11,7 +11,7 @@ This is a Deep Learning project that detects Brain Tumors from MRI images using 
 ## Model Download
 Download the trained model from Google Drive:
 
-[Download brain_tumor_model.h5](https://drive.google.com/file/d/1B9vbxl1vg0bFhVA_5SReq9J_aocJ46BA/view?usp=drive_link)
+[Download brain_tumor_model.h5](https://drive.google.com/file/d/1B9vbxl1vg0bFhVA_5SReq9J_aocJ46BA/view?usp=sharing)
 
 ## How to Run
 1. Clone the repository

@@ -7,7 +7,7 @@ import os
 from huggingface_hub import hf_hub_download
 
 # --- Model Configuration ---
-MODEL_REPO = "jahangi/brain_tumer"          # Tera exact repo name
+MODEL_REPO = "jahangi/brain_tumer"          
 MODEL_FILENAME = "brain_tumor_model.h5"
 MODEL_PATH = MODEL_FILENAME
 
@@ -18,7 +18,7 @@ if not os.path.exists(MODEL_PATH):
         hf_hub_download(
             repo_id=MODEL_REPO,
             filename=MODEL_FILENAME,
-            local_dir=".",              # Current folder mein save karega
+            local_dir=".",            
             local_dir_use_symlinks=False
         )
     st.success("Model downloaded successfully!")
@@ -31,7 +31,7 @@ def load_brain_tumor_model():
 model = load_brain_tumor_model()
 
 # --- Streamlit UI ---
-st.title("🧠 Brain Tumor Detection System (AI Powered)")
+st.title("🧠 Brain Tumor Detection System")
 st.write("Upload a Brain MRI image (JPG, PNG, JPEG) and the model will predict **Tumor** or **No Tumor**.")
 
 uploaded_file = st.file_uploader("Upload MRI Image", type=["jpg", "png", "jpeg"])
@@ -63,3 +63,4 @@ if uploaded_file is not None:
 
 st.markdown("---")
 st.caption("Model trained on Brain Tumor MRI Dataset | Deployed via Streamlit + Hugging Face")
+

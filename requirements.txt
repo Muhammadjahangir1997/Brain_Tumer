@@ -2,5 +2,7 @@ streamlit
 pillow
 numpy
 huggingface_hub
+tensorflow
+kagglehub
 
 
